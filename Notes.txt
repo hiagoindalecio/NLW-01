@@ -147,5 +147,3 @@ Pacotes do Expo/React Native:
 -> git commit -m "Nome que desejar no git"
 -> git remote add origin URL ou SSH do diretório do projeto no Git
 -> git push origin master 
-
-43 / ep 05 validando os dados
