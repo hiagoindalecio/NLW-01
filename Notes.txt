@@ -1,0 +1,143 @@
+Passos para iniciar o basico do node utilizando TypeScript:
+* Primeiramente no diretório desejado, já com o npm e node instalados, execute o comando 'npm init -y' para iniciar sua aplicação com as definições padrões no diretório.
+* Com sua aplicação iniciada, digite o código 'npm install express' adicionando assim o framework express a sua aplicação juntamente com os seus diretórios..
+* Em uma nova pasta source, crie seu arquivo TypeScript e instale o pacote necessário para que o mesmo identifique as tipagens do express utilizando 'npm install @types/express -D' (-D identifica que esse pacote é uma dependência de desenvolvimento que não será necessária online).
+* Instale o pacote do TypeScript utilizando 'npm install typescript -D'.
+* Inicie o arquivo de configuração do TypeScript (tsconfig.json) com 'npx tsc(ou typescript) --init'.
+* Para executar sua aplicação utilizando o TypeScript instale o pacote ts-node pois o node só identifica arquivos JavaScript, utilize o comando 'npm install ts-node -D'.
+* Utilize 'npx ts-node diretorio/diretorio.ts' o npx serve para executar um pacote instalado .
+* Para facilitar a execução instale o pacote ts-node-dev com 'npm install ts-node-dev -D' e execute utilizando o 'npx ts-node-dev diretorio/diretorio.ts', assim a cada atualização que você salvar ele executará novamente automaticamente.
+* Para facilitar mais ainda vá até o package.json em scripts e adicione a rota "qualquercoisa": "ts-node-dev diretorio/diretorio.ts", assim executando o comando npm run qualquercoisa você fará o mesmo que antes.
+
+Passos para criar projeto React:
+* Execute no diretório desejado o comando 'npx create-react-app nomedaaplicação --template=typescript' para criar o projeto react com o template typescript implantado.
+* Execute 'npm start' para iniciar o servidor.
+
+Significados:
+-> Express = Framework que fornece algumas funcionalidades prontas como os métodos 'GET', 'POST'...
+-> npx command = Executar pacotes do NodeJS.
+-> TypeScript = Aprimoramento do JS onde conseguimos pré visualizar a tipagem dos dados.
+-> SAP = Single-Page-Applications.
+-> React = Biblioteca que fornece funcionalidades ligadas à interface em relação a componentização assim permitindo o uso de uma só API para múltiplos clientes (mobile, web...).
+-> Componentização = Padronização de componentes do front end como buttons, podendo assim um componente ser modificado uma só vez em uma página inteira.
+-> React Native = Todo código é em JS porém a aplicação recebe uma dependencia chama JavaScript Core que adiciona uma thread de processamento de código JS dentro do dispositivo que passa a interpretar o código JavaScript.
+-> Expo = Cumpre o papel dos SDK de Mac e Android!
+-> JSX: Sintaxe XML(HTML) dentro do JavaScript.
+
+Algumas Bibliotecas:
+-> react-icons => Ícones do react.
+-> react-router-dom => Criar routers na aplicacao.
+-> react-leaflet e leaflet => Libs necessárias para utilizar o minimapa free leaflet. (use "<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>" no projeto) -> install guide https://react-leaflet.js.org/docs/en/installation
+-> axios => Facilitadora para comunicação com a API.
+-> multer => Lidar com upload de imagens beck-end (npm install multer)
+-> react-dropzone => Upload de imagens front-end.
+-> celebrate => Validação de dados backend (use npm install @types/hapi__joi -d para instalar a tipagem)
+
+Atualizando informacoes dentro do componente: import React, { useEffect, useState } from 'react';
+-> useEffect(() => {funcao}, [alteracao que dispara a funcao]) Utilizado para disparar uma funcao quando um estado e alterado
+-> const [items, funcao de coleta de items] = useState([valor inicial]) Utilizado para armazenar informacoes no componente
+	TIP: Sempre que é criado um estado para array ou objeto é necessário informar a tipagem da variável através da interface
+	Exemplo: 
+	interface Item {
+        id_item: number;
+        title: string;
+        image_url: string;
+
+    }
+    const [items, setItems] = useState<Item[]>([]); //Array do tipo Item
+    useEffect(() => {
+        api.get('items').then(response => {
+            setItems(response.data); // response eh o objeto retornada onde em data se encontra o arry
+        });
+    }, []);
+	
+Rotas:
+// GET: Buscar uma ou mais informações do back-end
+// POST: Criar uma nova informação no back-end
+// PUT: Atualizar informação existente no back-end
+// DELETE: Remover uma informação do back-end
+// request.param: Busca parâmetros da própria rota -> /rota/:elemento
+// request.query: Busca dados enviados como querystring -> /?variavel=tal (geralmente filtros)
+
+Padronização para funções de classe:
+* index -> Listar todos os items
+* show -> Listar um só item
+* create -> Criar elemento
+* update -> Atualizar item
+* delete -> Deletar Item
+
+Como passar uma função como referência para algum parâmetroÇ
+Exemplo:
+function handleSelectedItem(id: number) {
+    console.log(`O Id do elemento é: ${id}`);
+}
+<li key={item.id_item} onClick={() => handleSelectedItem(item.id_item)}> // Caso voce passe Onclick={handleSelectedItem(item.id_item)} a função vai executar sucessivamente.
+      <img src={item.imagem_url} alt={item.imagem_url} />
+      <span>{item.title}</span>
+</li>
+
+Exemplo de componente:
+
+import React from 'react';
+
+interface HeaderProps { // Aqui voce indica as prorpiedades (parametros) do componente
+    title?: string; // com ? nao eh obrigatoria, sem ? eh obrigatoria
+}
+
+const Header: React.FC<HeaderProps> = (props) => { // props sao todas as propriedades definidas em HeaderProps
+    const text = (props.title ? props.title : "Ecoleta") //if ternario (if(props.title) text = props.title else text = "Ecoleta")
+    return (
+        <header>
+            <h1>{text}</h1> 
+        </header>
+    );// {} para indicar uma variavel
+}
+
+export default Header;
+
+Usando o Componente: 
+
+import React, {useState} from 'react'; // importando o React com o useState
+import './App.css';
+
+// Components
+import Header from './Header'; // Importando o componente Header
+
+function App() {
+  var [counter, setCounter] = useState(0); // [valor do estado, funcao para atualizar valor do estado]
+  function handleButtonClick() {
+    setCounter(counter + 1);
+  }
+  return (
+    <div>
+      <Header title={`Contador: ${counter}`} />
+      <input type="button" value="++" onClick={handleButtonClick}/>
+    </div>
+  );
+}
+
+export default App;
+
+Desenvolvendo a aplicação mobile:
+
+*Primeiro instale o expo de maneira globalna maquina com "npm install -g expo-cli"
+*Inicie a aplicação expo no diretório usando "expo init nomedodiretorio"
+*Selecione a opção desejada, exemplo "blanck (TypeScript)" aplicação vazia porém com o typescript integrado.
+*Utilize "npm start" para rodar sua aplicação
+
+Pacotes do Expo/React Native:
+
+->expo install @expo-google-fonts/nome-da-fonte expo-font => Instala lib de fontes de google na aplicacao.
+->npm install @react-navigation/native => Lib de navegação entre páginas.
+->expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view => Libs variadas que incluem funcionalidades ligadas ao navigation.
+->npm install @react-navigation/stack => Lib que contem o createStackNavigator, que traz funcionalidades ligadas à navegação entre páginas
+->expo install react-native-maps => Lib de mapas.
+->expo install expo-constants => Lib de estilos.
+->expo install react-native-svg => Componete svg.(para imagens em formato svg)
+->expo install expo-location => Lib que da acesso a localização
+->expo install expo-mail-composer => Lib de email
+->npm install react-native-picker-select
+
+43 / ep 05 validando os dados
