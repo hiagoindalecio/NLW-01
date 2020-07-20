@@ -140,4 +140,12 @@ Pacotes do Expo/React Native:
 ->expo install expo-mail-composer => Lib de email
 ->npm install react-native-picker-select
 
+*****UPANDO NO GIT HUB*****
+(Se lembre de excluir a past .git oculta em projetos react e react-native)
+-> git init
+-> git add .
+-> git commit -m "Nome que desejar no git"
+-> git remote add origin URL ou SSH do diretório do projeto no Git
+-> git push origin master 
+
 43 / ep 05 validando os dados
