@@ -8,7 +8,7 @@ class ItemsController {
             return {
                 id_item: item.id_item,
                 title: item.title,
-                imagem_url: `http://192.168.0.102:3333/uploads/${item.image}`,
+                imagem_url: `http://192.168.0.106:3333/uploads/${item.image}`,
             };
         } );
         response.send(serializedItems);

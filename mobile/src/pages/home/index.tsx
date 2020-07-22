@@ -34,8 +34,7 @@ const Home = () => {
             setUfs(ufInitials); // Carregando o array de UF com o resultado da API
         });
     },[]);
-    useEffect(() => { // carrega quando o estado selectedUF eh alterado de acordo com [selecteUF]
-      console.log(selectedUF);  
+    useEffect(() => { // carrega quando o estado selectedUF eh alterado de acordo com [selecteUF] 
       if (selectedUF === '0') {
             setCities([]);
             return;
@@ -50,9 +49,6 @@ const Home = () => {
             setCities(cities);
         })
     },[selectedUF]);
-    useEffect(() => {
-      console.log(selectedCity);
-    },[selectedCity]);
     function handleNavigationPoints() {
       navigation.navigate('Points', {
         selectedUF,

@@ -25,8 +25,8 @@ const Points = () => {
       longitude: number;
     }
     interface Params {
-      uf: string;
-      city: string;
+      selectedUF: string;
+      selectedCity: string;
     }
     const [items, setItems] = useState<Item[]>([]);
     const [points, setPoints] = useState<Point[]>([]);
@@ -35,7 +35,6 @@ const Points = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const routeParams = route.params as Params;
-    console.log(`Cidade ${routeParams.city} e UF ${routeParams.uf}`);
     useEffect(() => {
       async function loadPosition() {
         const { status } = await Location.requestPermissionsAsync(); // busca permissão para acessar a localização
@@ -55,8 +54,8 @@ const Points = () => {
     useEffect(() => {
       api.get('points', {
         params: {
-          city: routeParams.city,
-          uf: routeParams.uf,
+          city: routeParams.selectedCity,
+          uf: routeParams.selectedUF,
           items: selectedItems
         }
       }).then(response => {
@@ -78,10 +77,13 @@ const Points = () => {
         navigation.navigate('Detail', { point_id: id });
     }
     function handleSelectedItem(id: number) {
+      console.log(`Clicado: ${id}`);
       const alreadySelected = selectedItems.findIndex(item => item === id); // procura o id na lista de selecionados
+      console.log(`Ja selecionado: ${alreadySelected}`);
       if(alreadySelected >= 0) {
         setSelectedItems(selectedItems.filter(item => item !== id)); // carrega com a lista de ids que sao diferentes do selecionado
       } else {
+        console.log(`Vai ser carregado: ${[ ...selectedItems, id ]}`)
         setSelectedItems([ ...selectedItems, id ]);
       }
     }

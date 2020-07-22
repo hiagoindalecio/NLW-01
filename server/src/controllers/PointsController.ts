@@ -4,13 +4,13 @@ import { Request, Response } from 'express'
 class PointsController {
     async index(request: Request, response: Response) {
         const { city, uf, items } = request.query;
-        const parsedItems = String(items)
-            .split(',')
+        const parsedItems = String(items).split(',')
             .map(item => Number(item.trim())); //transformando items em um array/ .trim() tira espacos da direita e da esquerda
-        console.log(`Cidade ${city} e UF ${uf}`);
+        const allItems = (parsedItems[0] ? parsedItems : [String(-1)]);
+        console.log(`Items: ${allItems}`);
         const points = await knex('tb_points')
             .join('point_itens', 'tb_points.id_point', 'point_itens.point_id')
-            .where('point_itens.item_id', parsedItems)
+            .whereIn('point_itens.item_id', allItems)
             .where('city', String(city))
             .where('uf', String(uf))
             .distinct()
@@ -18,7 +18,7 @@ class PointsController {
         const serializedPoints  = points.map( point => { // Percorre e reorganiza o que sera retornado
             return {
                 ...point,
-                imagem_url: `http://192.168.0.102:3333/uploads/${point.image}`,
+                imagem_url: `http://192.168.0.106:3333/uploads/${point.image}`,
             };
         } );
         return response.json(serializedPoints);
@@ -42,7 +42,7 @@ class PointsController {
             .select('tb_items.title');
         const serializedPoint  = {
                 ...point,
-                imagem_url: `http://192.168.0.102:3333/uploads/${point.image}`,
+                imagem_url: `http://192.168.0.106:3333/uploads/${point.image}`,
         };
         return response.json({
             point: serializedPoint,
